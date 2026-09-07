@@ -103,6 +103,11 @@ Six named moments, jumpable from the timeline or with keys `1`–`6`:
 
 | | |
 |---|---|
+| ![The walkthrough spotlighting the map](docs/img/walkthrough.png) | ![The entry screen](docs/img/entry.png) |
+| **The walkthrough.** One idea per step, spotlit on the real deck, with the incident wound to the moment that makes the point. | **The way in.** Two buttons, no wall of text — take the tour or go straight to the deck. |
+
+| | |
+|---|---|
 | ![A contested fact at four minutes](docs/img/contested.png) | ![Store-and-forward at eleven minutes](docs/img/backfill.png) |
 | **4m — the system refuses to choose.** Both claims attributed with sensor and timestamp. Until it is settled, the ground stays impassable in every route we calculate. | **11m — the past arrives late.** The comms log stamps the backfill `happened at T+9.2`, and evidence from a physical traversal outranks the earlier judgement call. |
 
