@@ -98,6 +98,7 @@ export function FleetPanel() {
   const dark = state.robots.filter((r) => r.link === 'dark' || r.link === 'lost').length
   return (
     <Panel
+      tour="fleet"
       title="Fleet"
       tone={dark > 0 ? 'alert' : 'quiet'}
       meta={dark > 0 ? `${dark} out of contact` : `all ${state.robots.length} reachable`}

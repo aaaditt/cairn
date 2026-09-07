@@ -16,6 +16,7 @@ export function Panel({
   children,
   tone = 'quiet',
   grow = false,
+  tour,
 }: {
   title: string
   meta?: ReactNode
@@ -24,9 +25,14 @@ export function Panel({
   tone?: 'quiet' | 'alert'
   /** The last panel in a rail absorbs the leftover height. */
   grow?: boolean
+  /** Anchor name for the guided walkthrough spotlight. */
+  tour?: string
 }) {
   return (
-    <section className={`flex min-h-0 flex-col bg-[#17140f] ${grow ? 'flex-1' : 'shrink-0'}`}>
+    <section
+      data-tour={tour}
+      className={`flex min-h-0 flex-col bg-[#17140f] ${grow ? 'flex-1' : 'shrink-0'}`}
+    >
       <header
         className="flex shrink-0 items-baseline justify-between gap-2 border-b px-3.5 pb-2 pt-2.5"
         style={{ borderColor: tone === 'alert' ? '#dc9a3f' : '#2b2620' }}

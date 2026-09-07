@@ -168,7 +168,7 @@ export function CityMap() {
   const openContests = state.contests.filter((c) => !c.resolution).length
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#0f0d0b]">
+    <div data-tour="map" className="relative h-full w-full overflow-hidden bg-[#0f0d0b]">
       {/* Two readings of the same data, overlaid on the map itself so the
           second one is actually findable. The age view is the decay argument
           made undeniable: it shows nothing but how old the picture is. */}

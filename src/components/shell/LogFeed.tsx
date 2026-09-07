@@ -16,6 +16,7 @@ export function LogFeed() {
   return (
     <Panel
       grow
+      tour="comms"
       title="Comms"
       meta={late > 0 ? `${state.log.length} received, ${late} late` : `${state.log.length} received`}
     >

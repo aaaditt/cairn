@@ -127,6 +127,7 @@ export function TriagePanel() {
   const unverified = entries.filter((e) => e.survivor.status === 'candidate').length
   return (
     <Panel
+      tour="triage"
       title="Triage"
       meta={
         entries.length === 0

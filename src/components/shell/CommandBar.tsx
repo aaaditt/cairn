@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { isMuted, play, setMuted } from '../../shell/audio'
 import { INCIDENT } from '../../sim/seed'
 import { useMission } from '../../state/MissionProvider'
 
@@ -24,14 +26,16 @@ function Gap({
   label,
   active,
   className = '',
+  tour,
 }: {
   value: string
   label: string
   active: boolean
   className?: string
+  tour?: string
 }) {
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div data-tour={tour} className={`flex flex-col ${className}`}>
       <span
         className="tnum text-[15px] font-semibold leading-none"
         style={{ color: active ? '#dc9a3f' : '#6f665b' }}
@@ -40,6 +44,25 @@ function Gap({
       </span>
       <span className="mt-1.5 text-[11.5px] leading-none text-[#9a8f80]">{label}</span>
     </div>
+  )
+}
+
+function SoundToggle() {
+  const [off, setOff] = useState(isMuted())
+  return (
+    <button
+      onClick={() => {
+        const next = !off
+        setMuted(next)
+        setOff(next)
+        if (!next) play('found')
+      }}
+      aria-pressed={!off}
+      title={off ? 'Turn mission audio on' : 'Turn mission audio off'}
+      className="ml-auto border border-[#3a342c] px-2.5 py-1.5 text-[12.5px] text-[#e8e1d6] transition-colors hover:border-[#554d43] hover:bg-[#201c17]"
+    >
+      {off ? 'Sound off' : 'Sound on'}
+    </button>
   )
 }
 
@@ -71,7 +94,7 @@ export function CommandBar({ onOpenProcess }: { onOpenProcess: () => void }) {
       </div>
 
       <div className="flex flex-1 flex-wrap items-end gap-x-5 gap-y-3">
-        <Gap value={`${cover.pct}%`} label="sector verified" active={cover.pct < 15} />
+        <Gap value={`${cover.pct}%`} label="sector verified" active={cover.pct < 15} tour="verified" />
         <Gap
           value={`${entries.length}`}
           label={entries.length === 1 ? 'person found' : 'people found'}
@@ -96,9 +119,11 @@ export function CommandBar({ onOpenProcess }: { onOpenProcess: () => void }) {
         />
       </div>
 
+      <SoundToggle />
+
       <button
         onClick={onOpenProcess}
-        className="ml-auto border border-[#3a342c] px-3 py-1.5 text-[12.5px] text-[#e8e1d6] transition-colors hover:border-[#554d43] hover:bg-[#201c17]"
+        className="border border-[#3a342c] px-3 py-1.5 text-[12.5px] text-[#e8e1d6] transition-colors hover:border-[#554d43] hover:bg-[#201c17]"
       >
         Read the design case
       </button>

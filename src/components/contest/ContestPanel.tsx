@@ -108,6 +108,7 @@ export function ContestPanel() {
   const open = state.contests.filter((c) => !c.resolution)
   return (
     <Panel
+      tour="dispute"
       title="Disputed ground"
       tone={open.length > 0 ? 'alert' : 'quiet'}
       meta={

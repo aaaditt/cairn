@@ -47,7 +47,7 @@ const GLYPHS = [
 
 function Key() {
   return (
-    <div className="space-y-3 border-b border-[#2b2620] px-3.5 py-3">
+    <div data-tour="legend" className="space-y-3 border-b border-[#2b2620] px-3.5 py-3">
       <KeyPatterns />
 
       <div className="space-y-1.5">

@@ -2,18 +2,23 @@
 
 **Command a rescue swarm through a city you cannot see, using information you cannot fully trust.**
 
-### ▶ [Open the live command deck](https://cairn-eight-kappa.vercel.app)
+### ▶ [Open the live command deck](https://cairn-showcase.vercel.app)
 
-*The incident plays itself — about 30 seconds end to end. Nothing to install, nothing to set up.*
+*Take the one-minute walkthrough, or skip it and watch the incident play itself.*
 
-Mirror, in case the first is slow: [aaaditt.github.io/UXcelerate](https://aaaditt.github.io/UXcelerate/) — same build, deployed twice so a dead link cannot cost the entry.
+Mirror: [aaaditt.github.io/cairn](https://aaaditt.github.io/cairn/) — same build, deployed twice so a dead link cannot cost anything.
 
-Submission for **UXcelerate!** — the IEI BPDC UI/UX challenge, 5–6 September 2026.
-Forked from [ieibpdc/UXcelerate](https://github.com/ieibpdc/UXcelerate).
+Built for **UXcelerate!** — the IEI BPDC UI/UX challenge, 5–6 September 2026.
+
+> **This repository is the version that kept going.** The competition entry is frozen exactly as it
+> was submitted, at [aaaditt/UXcelerate](https://github.com/aaaditt/UXcelerate)
+> ([live](https://cairn-eight-kappa.vercel.app)) — no commit and no redeploy since the deadline.
+> Everything added afterwards, the guided walkthrough and the mission audio, lives here instead of
+> being backdated onto something already judged.
 
 ---
 
-[![Everything six robots have seen after eleven minutes](docs/img/age-view.png)](https://cairn-eight-kappa.vercel.app)
+[![Everything six robots have seen after eleven minutes](docs/img/age-view.png)](https://cairn-showcase.vercel.app)
 
 <sup>**This is not a styling choice.** It is the map switched to *How old it is*, eleven minutes into the incident: every patch of ground six robots have actually observed, and nothing else. Bright was seen seconds ago, dim minutes ago, black never. **81% of the district has never been observed by anything.** An interface that draws the rest as though it were known is lying to the person who has to walk into it.</sup>
 
@@ -66,6 +71,20 @@ So the district is hand-drawn SVG over a deterministic simulation. That buys thr
 2. **It cannot fail.** No WebGL context, no tile server, no network dependency in the render path. It draws on a judge's laptop, in a projector room, on a phone.
 3. **It is honest about scale.** Six robots, eleven minutes, a few percent of a sector. A slick 3D city makes that look like coverage. A field of black does not.
 
+## Two ways in
+
+**The walkthrough.** Seven steps, one sentence each, spotlit on the real interface with the
+incident wound to the moment that makes the point. It replaced three paragraphs of prose on the
+entry screen, because showing somebody the disputed-ground panel at the minute two robots start
+arguing beats describing it. Skippable from the first frame, and it never runs twice.
+
+**Mission audio.** Every cue is synthesised at runtime — no files, no network, nothing to fail on
+a judge's laptop. Sound reports events and never decorates: a rising pair when somebody is found,
+two dry knocks when units contradict each other, a low rumble for the aftershock, a falling tone
+when a robot stops answering and a climbing one when it comes back. There is no ambience, so
+silence genuinely means nothing is happening. One toggle in the top bar turns it off, and the
+choice is remembered.
+
 ## Walk it in 90 seconds
 
 Six named moments, jumpable from the timeline or with keys `1`–`6`:
@@ -79,7 +98,7 @@ Six named moments, jumpable from the timeline or with keys `1`–`6`:
 | **8m** | Mesh failure | Two units go dark. Their uncertainty circles grow. Send one anyway — the order **queues**, and the top bar counts it. |
 | **11m** | Store-and-forward | MOLE-6 returns with three minutes of the past, stamped `happened at T+9.2`, and it **settles the 4m argument**. |
 
-**Keyboard:** `space` plays and pauses · `1`–`6` jump between moments · `esc` clears the selection
+**Keyboard:** `space` plays and pauses · `1`–`6` jump between moments · `esc` clears the selection · in the walkthrough, `→` advances and `esc` skips
 **In-app:** the full written case is behind *Read the design case*, top right.
 
 | | |
@@ -119,4 +138,4 @@ npm run dev
 
 ---
 
-*Built for UXcelerate! 2026 · [Live deck](https://cairn-eight-kappa.vercel.app) · [Competition repo](https://github.com/ieibpdc/UXcelerate)*
+*Built for UXcelerate! 2026 · [Live deck](https://cairn-showcase.vercel.app) · [Frozen entry](https://github.com/aaaditt/UXcelerate) · [Challenge repo](https://github.com/ieibpdc/UXcelerate)*

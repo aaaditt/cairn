@@ -3,15 +3,17 @@ import { stateAt } from '../sim/reducer'
 import { GRID_H, GRID_W } from '../sim/seed'
 
 /**
- * The briefing.
+ * The way in.
  *
- * A command deck opened cold is unreadable — a judge sees panels and a dark
- * map and has to guess what the idea was. So the entry screen states the idea
- * first, and uses the strongest thing the product can show as its hero.
+ * An earlier version of this screen explained the three mechanics in prose
+ * before letting anybody through. The walkthrough now does that job properly —
+ * one idea at a time, on the real interface — so the prose came out. What is
+ * left is the premise, the picture, and a way in.
  *
- * That hero is not a decorative render. It is the real mission state folded to
- * eleven minutes and drawn as information age: every patch of ground six units
- * have actually seen, and nothing else. The emptiness is the argument.
+ * The picture is not a render. It is the real mission state folded to eleven
+ * minutes and drawn as information age: every patch six units have observed,
+ * and nothing else. The emptiness is the whole argument, and it does not need
+ * a caption to land.
  */
 
 const CELL = 8
@@ -26,8 +28,6 @@ function ageFill(minutes: number | null): string {
 }
 
 function SeenSoFar() {
-  // Folded once at module render, not animated: this is a still, and a still
-  // makes the point harder than motion would.
   const grid = useMemo(() => stateAt(11).grid, [])
   const W = GRID_W * CELL
   const H = GRID_H * CELL
@@ -57,89 +57,55 @@ function SeenSoFar() {
   )
 }
 
-function Point({ title, children }: { title: string; children: React.ReactNode }) {
+export function Briefing({
+  onEnter,
+  tourSeen,
+}: {
+  onEnter: (withTour: boolean) => void
+  tourSeen: boolean
+}) {
   return (
-    <div className="border-t border-[#2b2620] pt-3.5">
-      <h2 className="text-[13.5px] font-semibold text-[#f4efe7]">{title}</h2>
-      <p className="mt-1.5 text-[13px] leading-[1.7] text-[#9a8f80]">{children}</p>
-    </div>
-  )
-}
+    <main className="flex min-h-full items-center bg-[#0f0d0b]">
+      <div className="mx-auto grid w-full max-w-5xl gap-10 px-6 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
+        <div className="max-w-lg">
+          <p className="text-[14px] font-semibold tracking-[0.32em] text-[#f4efe7]">CAIRN</p>
 
-export function Briefing({ onEnter }: { onEnter: () => void }) {
-  return (
-    <main className="min-h-full overflow-y-auto bg-[#0f0d0b]">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-14 lg:py-20">
-        <div className="max-w-xl">
-          <p className="text-[15px] font-semibold tracking-[0.3em] text-[#f4efe7]">CAIRN</p>
-
-          <h1 className="mt-6 text-[34px] font-semibold leading-[1.15] text-[#f4efe7] sm:text-[42px]">
+          <h1 className="mt-6 text-[34px] font-semibold leading-[1.12] text-[#f4efe7] sm:text-[40px]">
             Command a rescue swarm through a city you cannot see.
           </h1>
 
-          <p className="mt-5 text-[15px] leading-[1.75] text-[#b9af9f]">
-            Forty-seven minutes after a magnitude 7.2 earthquake, six robots are working a
-            collapsed district. The map is mostly a guess, the radio keeps dropping, and the units
-            keep finding things that contradict each other.
+          <p className="mt-5 text-[15px] leading-[1.7] text-[#b9af9f]">
+            Six robots are working a collapsed district. The map is mostly a guess and the radio
+            keeps dropping. Your job is not to drive them — it is to decide what to believe.
           </p>
 
-          <p className="mt-4 text-[15px] leading-[1.75] text-[#b9af9f]">
-            Your job is not to drive the robots. It is to decide{' '}
-            <span className="text-[#f4efe7]">what to believe</span>, and{' '}
-            <span className="text-[#f4efe7]">where to spend time you do not have</span>.
-          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => onEnter(true)}
+              className="bg-[#f4efe7] px-5 py-3 text-[14px] font-medium text-[#17140f] transition-colors hover:bg-white"
+            >
+              {tourSeen ? 'Replay the walkthrough' : 'Show me around'}
+            </button>
+            <button
+              onClick={() => onEnter(false)}
+              className="border border-[#3a342c] px-5 py-3 text-[14px] text-[#e8e1d6] transition-colors hover:border-[#554d43] hover:bg-[#201c17]"
+            >
+              Skip to the deck
+            </button>
+          </div>
 
-          <button
-            onClick={onEnter}
-            className="mt-8 bg-[#f4efe7] px-5 py-3 text-[14px] font-medium text-[#17140f] transition-colors hover:bg-white"
-          >
-            Open the command deck
-          </button>
-
-          <p className="mt-3 text-[12.5px] text-[#9a8f80]">
-            The incident plays itself, about thirty seconds end to end. Nothing to set up.
+          <p className="mt-4 text-[12.5px] leading-relaxed text-[#9a8f80]">
+            Seven steps, about a minute. Or skip it and watch the incident play itself.
           </p>
         </div>
 
         <div>
           <SeenSoFar />
-          <p className="mt-4 text-[13px] leading-[1.7] text-[#9a8f80]">
-            <span className="text-[#e8e1d6]">
-              This is everything the swarm has seen after eleven minutes.
-            </span>{' '}
-            Bright ground was observed seconds ago, dim ground minutes ago, black ground never.
-            Four fifths of this district has never been looked at by anything. An interface that
-            draws that part as though it were known is lying to the person who has to walk into
-            it.
+          <p className="mt-4 text-[13px] leading-[1.65] text-[#9a8f80]">
+            <span className="text-[#e8e1d6]">Eleven minutes in, this is everything seen so far.</span>{' '}
+            Bright was moments ago, dim was minutes ago, black is nobody has ever been.
           </p>
         </div>
-      </div>
-
-      <div className="mx-auto max-w-6xl px-6 pb-16">
-        <div className="grid gap-6 sm:grid-cols-3">
-          <Point title="The map forgets">
-            Ground nobody re-checks fades from confirmed to reported to guesswork on its own, and an
-            aftershock demotes the whole district at once. Certainty is a function of age, not a
-            flag somebody set.
-          </Point>
-          <Point title="Two robots disagree">
-            When the drone says a street is clear and the rover says it is blocked, nothing quietly
-            picks a winner. The dispute is raised, both claims are attributed, and you are shown
-            what each answer costs in lives reached.
-          </Point>
-          <Point title="A robot goes silent">
-            It is never deleted from the map. It holds its last known position inside a circle that
-            grows while contact ages, orders queue instead of failing, and when it returns it hands
-            over three minutes of the past that changes what you thought you knew.
-          </Point>
-        </div>
-
-        <p className="mt-10 max-w-3xl text-[13px] leading-[1.7] text-[#6f665b]">
-          Built for the IEI BPDC UXcelerate! challenge, 5&ndash;6 September 2026. No map vendor and
-          no 3D: the whole district is hand-drawn SVG over a deterministic simulation, because a
-          photographic basemap would assert that the city is known — which is the one thing the
-          brief says is not true.
-        </p>
       </div>
     </main>
   )
