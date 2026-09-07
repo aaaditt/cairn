@@ -1,0 +1,27 @@
+# CAIRN
+
+> A command interface for coordinating rescue robots after an earthquake, where the map is
+> incomplete, the radio is unreliable, and the robots keep discovering things that contradict
+> each other. Built for the IEI BPDC UXcelerate! challenge, September 2026.
+
+The reframe: a commander's job is not to drive robots, it is to decide what to believe and where
+to spend time they do not have. The primary object of the interface is therefore a decision under
+uncertainty, not a fleet.
+
+## Design decisions
+
+- Certainty is drawn as material — solid, stipple, hatch, void — never as colour alone, and it
+  decays continuously with age, so ground nobody re-checks visibly fades.
+- Contradictory observations raise a dispute rather than being silently resolved; both claims are
+  attributed and the cost of each choice is shown in triage order.
+- A robot that cannot be reached is never removed from the map; orders queue rather than fail.
+- Every event carries two clocks — when it happened, and when Command learned it — so
+  late-delivered observations arrive already stale and can revise the past.
+
+## Links
+
+- [Live command deck](https://cairn-showcase.vercel.app): the running prototype
+- [Source](https://github.com/aaaditt/cairn): full repository
+- [Research](https://github.com/aaaditt/cairn/blob/main/docs/01-research.md): domain grounding
+- [Information architecture](https://github.com/aaaditt/cairn/blob/main/docs/04-information-architecture.md): layout reasoning, and why there is no real basemap
+- [Accessibility audit](https://github.com/aaaditt/cairn/blob/main/docs/06-accessibility-audit.md): measured, including what fails

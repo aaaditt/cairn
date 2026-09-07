@@ -1,0 +1,4 @@
+# CAIRN — a command interface for coordinating rescue robots
+# through a city you cannot see.
+User-agent: *
+Allow: /
