@@ -133,15 +133,31 @@ export function Tour({ onDone }: { onDone: () => void }) {
       if (!step.target) {
         setRect(null)
       } else {
-        const el = document.querySelector<HTMLElement>(`[data-tour="${step.target}"]`)
+        // The fleet list and the key are rendered twice — once in the desktop
+        // rail, once in the stacked mobile column — and one of the two is
+        // always display:none. Taking the first match would spotlight a 0x0
+        // box in the corner on a phone, so pick the copy that is laid out.
+        const all = Array.from(
+          document.querySelectorAll<HTMLElement>(`[data-tour="${step.target}"]`),
+        )
+        const el = all.find((n) => {
+          const r = n.getBoundingClientRect()
+          return r.width > 0 && r.height > 0
+        })
         if (el) {
           const r = el.getBoundingClientRect()
-          setRect({ top: r.top, left: r.left, width: r.width, height: r.height })
+          // Bring it into view on narrow screens, where the target may be far
+          // below the fold. Ignored when it is already visible.
+          if (r.top < 0 || r.bottom > window.innerHeight) {
+            el.scrollIntoView({ block: 'center', behavior: 'smooth' })
+          }
+          const r2 = el.getBoundingClientRect()
+          setRect({ top: r2.top, left: r2.left, width: r2.width, height: r2.height })
         } else {
           setRect(null)
         }
       }
-      if (tries++ < 12) raf = requestAnimationFrame(measure)
+      if (tries++ < 40) raf = requestAnimationFrame(measure)
     }
     measure()
     const onResize = () => {
@@ -183,7 +199,7 @@ export function Tour({ onDone }: { onDone: () => void }) {
   // instead and reads as an annotation on it.
   const vw = typeof window === 'undefined' ? 1200 : window.innerWidth
   const vh = typeof window === 'undefined' ? 800 : window.innerHeight
-  const CARD_W = 320
+  const CARD_W = Math.min(320, vw - 32)
   const CARD_H = 190
   const M = 16
 
@@ -249,8 +265,8 @@ export function Tour({ onDone }: { onDone: () => void }) {
       <div
         ref={cardRef}
         tabIndex={-1}
-        className="absolute w-[320px] border border-[#3a342c] bg-[#17140f] p-4 shadow-2xl transition-all duration-300 ease-out"
-        style={cardStyle}
+        className="absolute max-w-[calc(100vw-32px)] border border-[#3a342c] bg-[#17140f] p-4 shadow-2xl transition-all duration-300 ease-out"
+        style={{ ...cardStyle, width: CARD_W }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-1.5">
